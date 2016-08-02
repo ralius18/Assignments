@@ -18,9 +18,18 @@ public class Character implements Card{
 		Peacock,
 		Plum
 	}
+	private boolean isSelected = false;
 	
 	public Character(String name){
 		this.name = name;
+	}
+	
+	public boolean isSelected(){
+		return isSelected;
+	}
+	
+	public void select(){
+		isSelected = true;
 	}
 	
 	public String cardName(){
