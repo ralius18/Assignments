@@ -7,11 +7,24 @@ package game;
  * @author Jarvis Dunn
  *
  */
-public class Character extends Card{
+public class Character implements Card{
+	
+	private String name;
+	public enum NAME{
+		Scarlett,
+		Mustard,
+		White,
+		Green,
+		Peacock,
+		Plum
+	}
 	
 	public Character(String name){
-		super();
 		this.name = name;
+	}
+	
+	public String cardName(){
+		return name;
 	}
 
 }

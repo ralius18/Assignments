@@ -1,10 +1,12 @@
 package game;
 
 import control.*;
+import locations.Room;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Base class for text based Cluedo game
@@ -20,6 +22,7 @@ public class Cluedo {
 	private ArrayList<Character> characters;
 	private ArrayList<Room> rooms;
 	private ArrayList<Weapon> weapons;
+	private HashSet<Dice> dice;
 	private Solution solution;
 	
 	

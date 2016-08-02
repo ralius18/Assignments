@@ -1,4 +1,6 @@
-package game;
+package locations;
+
+import game.*;
 
 /**
  * Represents a room that a player can be in
@@ -6,17 +8,30 @@ package game;
  * @author Jarvis Dunn
  *
  */
-public class Room extends Card implements Location{
+public class Room implements Card{
 	
 	private String name;
+	private Weapon weapon;
+	private Square weaponSquare;
+	private Square squares[][];
+	public enum TYPE{
+		Kitchen,
+		BallRoom,
+		Conservatory,
+		BilliardRoom,
+		Library,
+		Study,
+		Hall,
+		Lounge,
+		DiningRoom
+	}
 	
 	public Room(String name){
-		super();
 		this.name = name;
 	}
 
-	public String toString(){
-		return this.name;
+	public String cardName() {
+		return name;
 	}
 
 }

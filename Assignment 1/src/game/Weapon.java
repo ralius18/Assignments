@@ -1,10 +1,23 @@
 package game;
 
-public class Weapon extends Card{
+public class Weapon implements Card{
+	
+	private String name;
+	public enum TYPE{
+		Candlestick,
+		Dagger,
+		Pipe,
+		Revolver,
+		Rope,
+		Spanner
+	}
 
 	public Weapon(String name){
-		super();
 		this.name = name;
+	}
+	
+	public String cardName(){
+		return name;
 	}
 	
 }

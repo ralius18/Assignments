@@ -7,11 +7,7 @@ package game;
  * @author Jarvis Dunn
  *
  */
-public abstract class Card {
+public interface Card {
 	
-	protected String name;
-	
-	public String cardName(){
-		return this.name;
-	}
+	public String cardName();
 }

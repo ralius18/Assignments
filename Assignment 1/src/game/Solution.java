@@ -1,5 +1,7 @@
 package game;
 
+import locations.Room;
+
 public class Solution {
 
 	private Character character;

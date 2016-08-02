@@ -2,6 +2,8 @@ package game;
 
 import java.util.ArrayList;
 
+import locations.Room;
+
 /**
  * Class to control the board, storing all objects and their position
  * @author Brad Stone
