@@ -7,6 +7,11 @@ public class Dice {
 	private int number;
 	private int sides;
 	
+	/**
+	 * @param number of dice.
+	 * @param sides, number of sides for each dice (can have a 1 sided dice even though it is
+	 * physically impossible.
+	 */
 	public Dice(int number, int sides){
 		this.number = number;
 		this.sides = sides;
