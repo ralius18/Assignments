@@ -12,6 +12,10 @@ public class Dice {
 		this.sides = sides;
 	}
 
+	/**
+	 * Gives a random integer based on number (of dice) and sides.
+	 * @return an integer from (1 * number) to (sides * number)
+	 */
 	public int roll(){
 		int result = 0;
 		if (sides >= 3){
