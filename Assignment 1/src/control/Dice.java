@@ -9,12 +9,12 @@ public class Dice {
 	
 	/**
 	 * @param number of dice.
-	 * @param sides, number of sides for each dice (can have a 1 sided dice even though it is
-	 * physically impossible.
+	 * @param sides, number of sides for each dice. Must have at least 3.
 	 */
 	public Dice(int number, int sides){
 		this.number = number;
 		this.sides = sides;
+		assert sides >= 3 : "Mu8st have more than 3 sides for dice!";
 	}
 
 	/**
@@ -34,5 +34,12 @@ public class Dice {
 			System.out.println("Number of sides must be at least 3");
 		}
 		return result;
+	}
+	
+	public int roll2(){
+		int min = 1 * number;
+		int max = sides * number;
+		assert min < max;
+		return (int) (min + Math.random()*(max - min + 1));
 	}
 }
