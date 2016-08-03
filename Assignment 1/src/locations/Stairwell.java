@@ -11,9 +11,9 @@ import control.Player;
  * @author Jarvis Dunn
  *
  */
-public class Stairwell extends Square {
+public class Stairwell extends Location {
 	
-	private Stairwell other;
+	private Room otherRoom;
 	
 	//List of possible locations to move to
 	private ArrayList<Square> validMoves;
@@ -27,30 +27,29 @@ public class Stairwell extends Square {
 	 * @param player on this square (null if no player on square).
 	 * @param room that this square is in.
 	 */
-	public Stairwell(int x, int y, Player player, Room room) {
-		super(x, y, player, room);
+	public Stairwell(Room otherRoom) {
+		super();
+		this.otherRoom = otherRoom;
+		addLocation(otherRoom);
 	}
 
 	/**
 	 * @return The other Stairwell that links to this one. 
 	 */
-	public Stairwell getOther() {
-		return other;
-	}
-
-	/**
-	 * @param Set the other Stairwell that links to this one. 
-	 */
-	public void setOther(Stairwell other) {
-		this.other = other;
+	public Room getOther() {
+		return otherRoom;
 	}
 	
 	@Override
-	public void addSquare(Square s){
-		if (s instanceof RoomSquare){
-			if (!validMoves.contains(s))
-				validMoves.add(s);
+	public void addLocation(Location l) {
+		if (l instanceof Room){
+			actualAddLocation(l);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "U";
 	}
 	
 }

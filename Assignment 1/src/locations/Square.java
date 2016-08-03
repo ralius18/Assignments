@@ -13,18 +13,12 @@ import game.*;
  * @author Jarvis Dunn
  *
  */
-public abstract class Square {
-
-	//I set these to public final cause I assume we won't be changing them, plus easy access.
-	public final int x;
-	public final int y;
-	public final Room room;
+public class Square extends Location {
 	
 	//There will be different players on squares.
 	private Player player;
 	
-	//List of possible locations to move to
-	private ArrayList<Square> validMoves;
+	private boolean isEntrance;
 	
 	//What if we have 2 people on the same square?? TODO
 	//private Set<Player> multiplePlayers = new HashSet<>();
@@ -36,11 +30,9 @@ public abstract class Square {
 	 * @param player on this square (null if no player on square).
 	 * @param room that this square is in.
 	 */
-	public Square(int x, int y, Player player, Room room){
-		this.x = x;
-		this.y = y;
-		this.player = player;
-		this.room = room;
+	public Square(boolean isEntrance){
+		super();
+		this.isEntrance = isEntrance;
 	}
 	
 	/**
@@ -54,16 +46,28 @@ public abstract class Square {
 		this.player = player;
 	}
 	
-	public ArrayList<Square> getValidMoves(){
-		return validMoves;
+	public boolean isEntrance(){
+		return isEntrance;
 	}
 	
-	public void addSquare(Square s){
-		if (s != null){
-			if (s instanceof Doorway || s instanceof Square){
-				if (!validMoves.contains(s))
-					validMoves.add(s);
+	public void addLocation(Location l){
+		if (l != null){
+			if (l instanceof Room && isEntrance){
+				actualAddLocation(l);
 			}
+			else if (! (l instanceof Room)){
+				actualAddLocation(l);
+			}
+		}
+	}
+	
+	@Override
+	public String toString(){
+		if (isEntrance){
+			return "*";
+		}
+		else{
+			return "E";
 		}
 	}
 	

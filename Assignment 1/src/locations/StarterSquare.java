@@ -9,7 +9,7 @@ import control.Player;
  * @author Jarvis Dunn
  *
  */
-public class StarterSquare extends Square {
+public class StarterSquare extends Location {
 
 	/**
 	 * Create a StarterSquare
@@ -18,8 +18,19 @@ public class StarterSquare extends Square {
 	 * @param player on this square (null if no player on square).
 	 * @param room that this square is in.
 	 */
-	public StarterSquare(int x, int y, Player player, Room room) {
-		super(x, y, player, room);
+	public StarterSquare() {
+		super();
+	}
+	
+	public void addLocation(Location l){
+		if (l != null && l instanceof Square){
+			actualAddLocation(l);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "S";
 	}
 
 }

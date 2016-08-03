@@ -8,7 +8,7 @@ import game.*;
  * @author Jarvis Dunn
  *
  */
-public class Room implements Card{
+public class Room extends Location implements Card{
 	
 	private String name;
 	private Weapon weapon;
@@ -37,5 +37,20 @@ public class Room implements Card{
 	public Square[][] getSquares(){
 		return squares;
 	}
+	
+	public void addLocation(Location l){
+		if (l != null){
+			if (l instanceof Stairwell){
+				actualAddLocation(l);
+			}
+			else if (l instanceof Square){
+				if (((Square) l).isEntrance())
+					actualAddLocation(l);
+			}
+		}
+	}
 
+	public String toString(){
+		return "#";
+	}
 }

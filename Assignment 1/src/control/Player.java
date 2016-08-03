@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import game.*;
 import game.Character;
-import locations.Square;
+import locations.*;
 
 public class Player {
 
 	private Character character;
 	private int uid;
-	private Square currentSquare;
+	private Location currentLocation;
 	private ArrayList<Card> hand;
 	
 	public Player(Character character){
@@ -62,8 +62,8 @@ public class Player {
 					if (x >= 0){
 						int y = Integer.parseInt(input.substring(1,input.length()));
 						Point point = new Point(x,y);
-						Square characterSquare = board.getSquareFromPoint(currentPos);
-						Square inputSquare = board.getSquareFromPoint(point);
+						Location characterSquare = board.getSquareFromPoint(currentPos);
+						Location inputSquare = board.getSquareFromPoint(point);
 						if (isValid(0, roll, characterSquare, inputSquare, board)){
 							return new Point(x,y);
 						}
@@ -79,7 +79,7 @@ public class Player {
 		return null;
 	}
 
-	public boolean isValid(int depth, int maxDepth, Square current, Square to, Board board) {
+	public boolean isValid(int depth, int maxDepth, Location current, Location to, Board board) {
 		if (depth > maxDepth){
 			return false;
 		}
@@ -87,8 +87,8 @@ public class Player {
 			return true;
 		}
 		
-		for (Square square : current.getValidMoves()){
-			if (isValid(depth+1, maxDepth, square, to, board)){
+		for (Location location: current.getValidMoves()){
+			if (isValid(depth+1, maxDepth, location, to, board)){
 				return true;
 			}
 		}
