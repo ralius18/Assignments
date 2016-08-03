@@ -9,12 +9,12 @@ public class Dice {
 	
 	/**
 	 * @param number of dice.
-	 * @param sides, number of sides for each dice (can have a 1 sided dice even though it is
-	 * physically impossible.
+	 * @param sides, number of sides for each dice. Must have at least 3.
 	 */
 	public Dice(int number, int sides){
 		this.number = number;
 		this.sides = sides;
+		assert sides >= 3 : "Mu8st have more than 3 sides for dice!";
 	}
 
 	/**
