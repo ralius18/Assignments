@@ -17,5 +17,5 @@ public abstract class Location {
 			validMoves.add(l);
 	}
 	
-	public abstract String toString();
+	public abstract void print();
 }

@@ -1,7 +1,7 @@
 package game;
 
 import control.*;
-import locations.Room;
+import locations.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -155,7 +155,115 @@ public class Cluedo {
 				
 				try{
 					BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-					//TODO: Continue loop
+					//Begin processing a single player
+					p.move(board);
+					Location currentLocation = board.getLocationAtPoint(board.getPosition(p.getCharacter()));
+					if (currentLocation instanceof Room || currentLocation instanceof Middle){
+						if (currentLocation instanceof Middle){
+							System.out.println("Would you like to attempt to solve the murder? If you are wrong, you cannot continure (y/n)");
+						}
+						else {
+							System.out.println("Would you like to make a guess in the "+((Room)currentLocation).cardName()+"? (y/n)");
+						}
+						boolean valid = false;
+						boolean makingGuess = false;
+						while (!valid){
+							String input = reader.readLine();
+							if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
+								valid = true;
+								makingGuess = true;
+							}
+							else if (input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")){
+								valid = true;
+								makingGuess = false;
+							}
+							else {
+								System.out.println("Enter either 'y' or 'n'");
+							}
+						}
+						if (makingGuess){
+							System.out.println("Your current hand:\n"+p.handToString());
+							System.out.println("\nWeapons:\n");
+							for (int j = 0; j < weapons.length; j++){
+								System.out.print("["+j+"]"+weapons[j].cardName()+" ");
+								if (j < weapons.length - 1){
+									System.out.println("| ");
+								}
+							}
+							System.out.println();
+							
+							valid = false;
+							Weapon chosenWeapon = null;
+							while (!valid){
+								System.out.println("Choose weapon: (Enter number)");
+								valid = true;
+								try{
+									int index = Integer.parseInt(reader.readLine());
+									chosenWeapon = weapons[index];
+								} catch (Exception e){
+									System.out.println("Invalid input");
+									valid = false;
+								}
+							}
+							
+							System.out.println("\nCharacters:\n");
+							for (int j = 0; j < characters.length; j++){
+								System.out.print("["+j+"]:"+characters[j].cardName()+ " ");
+								if (j < characters.length - 1){
+									System.out.print("| ");
+								}
+							}
+							System.out.println();
+							valid = false;
+							Character chosenCharacter = null;
+							while (!valid){
+								System.out.println("Choose character: (Enter number)");
+								valid = true;
+								try{
+									int index = Integer.parseInt(reader.readLine());
+									chosenCharacter = characters[index];
+								} catch (Exception e){
+									System.out.println("Invalid input");
+									valid = false;
+								}
+							}
+							
+							if (currentLocation instanceof Room){
+								board.setPosition(chosenCharacter, board.getPosition(p.getCharacter()));
+							}
+							
+							Room chosenRoom = null;
+							if (currentLocation instanceof Room){
+								chosenRoom = (Room) currentLocation;
+							}
+							else if (currentLocation instanceof Middle){
+								System.out.println("Rooms:\n");
+								for (int j = 0; j < rooms.length; j++){
+									System.out.print("["+j+"]:"+rooms[j].cardName()+ " ");
+									if (j < rooms.length-1){
+										System.out.print("| ");
+									}
+								}
+								System.out.println();
+								valid = false;
+								while (!valid){
+									System.out.println("Choose room: (Enter number)");
+									valid = true;
+									try {
+										int index = Integer.parseInt(reader.readLine());
+										chosenRoom = rooms[index];
+									} catch (Exception e){
+										System.out.println("Invalid input");
+										valid = false;
+									}
+								}
+							}
+							
+							if (currentLocation instanceof Middle){
+								//TODO: Process choices
+							}
+						}
+					} //End of player turn
 				} catch (Exception e){
 					e.printStackTrace();
 				}

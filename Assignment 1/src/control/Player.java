@@ -24,9 +24,10 @@ public class Player {
 	
 	public void move(Board board){
 		Point currentPos = board.getPosition(this.character);
-		int roll = board.getDice().roll();
+		int roll = board.getDice().roll2();
 		System.out.println("You rolled " + roll);
 		Point move = attemptMove(roll, currentPos, board);
+		board.setPosition(this.character, move);
 	}
 	
 	public Point attemptMove(int roll, Point currentPos, Board board) {
@@ -99,8 +100,27 @@ public class Player {
 		hand.add(card);
 	}
 	
+	public ArrayList<Card> getHand(){
+		return hand;
+	}
+	
 	public String name(){
 		return character.cardName();
+	}
+
+	public Character getCharacter() {
+		return character;
+	}
+	
+	public String handToString(){
+		String result = "";
+		for (Card c : hand){
+			result += "[" + c.cardName() + "]";
+		}
+		if (result.length() > 0){
+			result = result.substring(0, result.length()-1);
+		}
+		return result;
 	}
 	
 }

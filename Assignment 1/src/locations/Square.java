@@ -62,12 +62,12 @@ public class Square extends Location {
 	}
 	
 	@Override
-	public String toString(){
+	public void print(){
 		if (isEntrance){
-			return "*";
+			System.out.println("E");
 		}
 		else{
-			return "E";
+			System.out.println("*");
 		}
 	}
 	

@@ -48,8 +48,8 @@ public class Stairwell extends Location {
 	}
 
 	@Override
-	public String toString() {
-		return "U";
+	public void print() {
+		System.out.println("U");
 	}
 	
 }

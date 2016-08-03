@@ -31,6 +31,7 @@ public class Board {
 	private Stairwell stairsToLounge;
 	private Stairwell stairsToKitchen;
 	private Stairwell stairsToConservatory;
+	private Middle middle = new Middle();
 	
 	public Board (Character[] characters, Room[] rooms){
 		this.characters = characters;
@@ -125,6 +126,7 @@ public class Board {
 			   		   return stairsToLounge;
 			case 'C' : stairsToConservatory = new Stairwell(rooms[2]);
 			   		   return stairsToConservatory;
+			case 'm' : return middle;
 		}
 		return null;
 	}
@@ -156,5 +158,56 @@ public class Board {
 	public void print(){
 		
 	}
+
+	public void setPosition(Character character, Point point) {
+		if (point.getX() >= 0 && point.getX() < locations.length 
+				&& point.getY() >= 0 && point.getY() < locations[0].length){
+			this.playerPositions.put(character, point);
+		}
+		
+	}
 	
+	public Location getLocationAtPoint(Point p){
+		if (p.getX() >= 0 && p.getX() < locations.length 
+				&& p.getY() >= 0 && p.getY() < locations[0].length) {
+			return locations[(int) p.getX()][(int) p.getY()];
+		} 
+		else {
+			return null;
+		}
+	}
+	
+	public void printBoard(){
+		System.out.println("   ");
+		for (char x = 'A'; x-'A' < locations.length; x++){
+			System.out.println(x);
+		}
+		System.out.println();
+		for (int y = 0; y < locations[0].length; y++){
+			System.out.print(y+" ");
+			if (y < 10){
+				System.out.print(" ");
+			}
+			for (int x = 0; x < locations.length; x++){
+				if (locations[x][y] != null){
+					boolean characterOnLocation = false;
+					for (Character c : playerPositions.keySet()){
+						Point p = playerPositions.get(c);
+						if (p.getX() == x && p.getY() == y){
+							characterOnLocation = true;
+							System.out.print(c.toChar());
+							break;
+						}
+					}
+					if (!characterOnLocation){
+						locations[x][y].print();
+					}
+				}
+				else {
+					System.out.print(" ");
+				}
+			}
+			System.out.println();
+		}
+	}
 }

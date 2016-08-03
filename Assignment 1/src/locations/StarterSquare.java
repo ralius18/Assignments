@@ -29,8 +29,8 @@ public class StarterSquare extends Location {
 	}
 
 	@Override
-	public String toString() {
-		return "S";
+	public void print() {
+		System.out.print("S");
 	}
 
 }

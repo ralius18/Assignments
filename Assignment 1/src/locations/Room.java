@@ -50,7 +50,8 @@ public class Room extends Location implements Card{
 		}
 	}
 
-	public String toString(){
-		return "#";
+	@Override
+	public void print() {
+		System.out.print("#");;
 	}
 }

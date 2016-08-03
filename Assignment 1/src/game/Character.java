@@ -35,5 +35,17 @@ public class Character implements Card{
 	public String cardName(){
 		return name;
 	}
+	
+	public char toChar(){
+		switch (name){
+			case "Green" : return 'G';
+			case "Mustard" : return 'M';
+			case "Peacock" : return 'P';
+			case "Plum" : return 'L';
+			case "Scarlett" : return 'S';
+			case "White" : return 'W';
+		}
+		return '@'; //unreachable
+	}
 
 }
