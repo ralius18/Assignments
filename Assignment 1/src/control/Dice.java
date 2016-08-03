@@ -35,4 +35,11 @@ public class Dice {
 		}
 		return result;
 	}
+	
+	public int roll2(){
+		int min = 1 * number;
+		int max = sides * number;
+		assert min < max;
+		return (int) (min + Math.random()*(max - min));
+	}
 }
