@@ -33,5 +33,9 @@ public class Room implements Card{
 	public String cardName() {
 		return name;
 	}
+	
+	public Square[][] getSquares(){
+		return squares;
+	}
 
 }

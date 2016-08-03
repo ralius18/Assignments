@@ -1,16 +1,19 @@
 package locations;
 
+import java.util.ArrayList;
+
 import control.*;
 import game.*;
 
 /**
- * Is a square on the board.
+ * Is a square on the board. A square that players move around on, in between rooms.
+ * Also container for other types of squares
  * 
  * @author Brad Stone
  * @author Jarvis Dunn
  *
  */
-public class Square {
+public abstract class Square {
 
 	//I set these to public final cause I assume we won't be changing them, plus easy access.
 	public final int x;
@@ -19,6 +22,9 @@ public class Square {
 	
 	//There will be different players on squares.
 	private Player player;
+	
+	//List of possible locations to move to
+	private ArrayList<Square> validMoves;
 	
 	//What if we have 2 people on the same square?? TODO
 	//private Set<Player> multiplePlayers = new HashSet<>();
@@ -42,6 +48,23 @@ public class Square {
 	 */
 	public Player getPlayer(){
 		return player;
+	}
+	
+	public void setPlayer(Player player){
+		this.player = player;
+	}
+	
+	public ArrayList<Square> getValidMoves(){
+		return validMoves;
+	}
+	
+	public void addSquare(Square s){
+		if (s != null){
+			if (s instanceof Doorway || s instanceof Square){
+				if (!validMoves.contains(s))
+					validMoves.add(s);
+			}
+		}
 	}
 	
 }

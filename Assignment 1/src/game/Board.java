@@ -25,14 +25,40 @@ public class Board {
 	private Square squares[][]; 
 	//For storing locations of players
 	private HashMap<Character,Point> playerPositions = new HashMap<Character,Point>();
-
+	private Dice dice;
+	
 	public Board (Character[] characters, Room[] rooms){
 		this.characters = characters;
 		this.rooms = rooms;
 		this.squares = new Square[24][25];
+		this.dice = new Dice(2,6);
 		
 		ArrayList<Point> startPoints = new ArrayList<Point>();
-		String boardString = "";
+		String boardString =  "nnnnnnnnnSnnnnSnnnnnnnnn\n"+
+							  "kkkkkUn___bbbb___ncccccc\n"+
+							  "kkkkkk__bbbbbbbb__cccccc\n"+
+							  "kkkkkk__bbbbbbbb__cccccc\n"+
+							  "kkkkkk__bbbbbbbb__Dccccc\n"+
+							  "kkkkkk_DDbbbbbbDD_DcccUn\n"+
+							  "nkkkDk__bbbbbbbb_______S\n"+
+							  "____D___bDbbbbDb_______n\n"+
+							  "n________D____D___iiiiii\n"+
+							  "ddddd____________DDiiiii\n"+
+							  "dddddddd__mmmmm___iiiiii\n"+
+							  "dddddddd__mmmmm___iiiiii\n"+
+							  "dddddddDD_mmmmm___iiiiDi\n"+
+							  "dddddddd__mmmmm_____D_Dn\n"+
+							  "dddddddd__mmmmm___llDlln\n"+
+							  "ddddddDd__mmmmm__lllllll\n"+
+							  "n_____D___mmmmm_DDllllll\n"+
+							  "S__________DD____lllllll\n"+
+							  "n_____D__hhDDhh___llllln\n"+
+							  "UoooooD__hhhhhh________S\n"+
+							  "ooooooo__hhhhhDD_D_____n\n"+
+							  "ooooooo__hhhhhh__DsssssU\n"+
+							  "ooooooo__hhhhhh__sssssss\n"+
+							  "ooooooo__hhhhhh__sssssss\n"+
+							  "oooooonSnhhhhhhn_nssssss\n";
 		
 		try {
 		
@@ -60,9 +86,23 @@ public class Board {
 		}
 	}
 	
-	private Square parseSquare(char symbol) {
-		// TODO Auto-generated method stub
+	public Point getPosition(Character character){
+		return playerPositions.get(character);
+	}
+	
+	public Dice getDice(){
+		return dice;
+	}
+	
+	public Square parseSquare(char symbol) {
+		switch (symbol){
+			case 'n' : return null;
+		}
 		return null;
+	}
+	
+	public Square getSquareFromPoint(Point p){
+		return squares[p.x][p.y];
 	}
 
 	public void print(){

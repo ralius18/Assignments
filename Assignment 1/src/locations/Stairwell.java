@@ -1,5 +1,7 @@
 package locations;
 
+import java.util.ArrayList;
+
 import control.Player;
 
 /**
@@ -12,6 +14,9 @@ import control.Player;
 public class Stairwell extends Square {
 	
 	private Stairwell other;
+	
+	//List of possible locations to move to
+	private ArrayList<Square> validMoves;
 	
 	//TODO: I assume with the other stairwell can not be put in through the constructor. 
 
@@ -38,6 +43,14 @@ public class Stairwell extends Square {
 	 */
 	public void setOther(Stairwell other) {
 		this.other = other;
+	}
+	
+	@Override
+	public void addSquare(Square s){
+		if (s instanceof RoomSquare){
+			if (!validMoves.contains(s))
+				validMoves.add(s);
+		}
 	}
 	
 }
