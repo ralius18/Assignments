@@ -40,6 +40,6 @@ public class Dice {
 		int min = 1 * number;
 		int max = sides * number;
 		assert min < max;
-		return (int) (min + Math.random()*(max - min));
+		return (int) (min + Math.random()*(max - min + 1));
 	}
 }
