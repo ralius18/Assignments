@@ -48,13 +48,11 @@ public class Player {
 					Integer.parseInt(input.substring(1));
 					valid = true;
 				} catch (Exception f){
-					f.printStackTrace();
 				}
 				try {
 					Integer.parseInt(input.substring(0,1));
 					valid = false;
 				} catch (Exception f){
-					f.printStackTrace();
 				}
 				
 				if (valid){
@@ -117,10 +115,22 @@ public class Player {
 		for (Card c : hand){
 			result += "[" + c.cardName() + "]";
 		}
-		if (result.length() > 0){
-			result = result.substring(0, result.length()-1);
-		}
+//		if (result.length() > 0){
+//			result = result.substring(0, result.length()-1);
+//		}
 		return result;
+	}
+
+	public Card getCard(Character character, Weapon weapon, Room room) {
+		for (Card c : hand){
+			if (c.cardName().equals(character.cardName()))
+				return c;
+			else if (c.cardName().equals(weapon.cardName()))
+				return c;
+			else if (c.cardName().equals(room.cardName()))
+				return c;
+		}
+		return null;
 	}
 	
 }

@@ -14,4 +14,20 @@ public class Solution {
 		this.room = room;
 		this.weapon = weapon;
 	}
+
+	public boolean checkGuess(Character character, Weapon weapon, Room room) {
+		return (this.character.equals(character) &&
+				this.weapon.equals(weapon) &&
+				this.room.equals(room));
+	}
+	
+	public void print(){
+		if (isSolved){
+			System.out.println("Character: "+character.cardName()+"\nWeapon: "+
+								weapon.cardName()+"\nRoom: "+room.cardName());
+		}
+		else {
+			System.out.println("Solution not yet solved");
+		}
+	}
 }

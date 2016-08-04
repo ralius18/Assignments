@@ -155,10 +155,6 @@ public class Board {
 		return locations[p.x][p.y];
 	}
 
-	public void print(){
-		
-	}
-
 	public void setPosition(Character character, Point point) {
 		if (point.getX() >= 0 && point.getX() < locations.length 
 				&& point.getY() >= 0 && point.getY() < locations[0].length){
@@ -178,9 +174,9 @@ public class Board {
 	}
 	
 	public void printBoard(){
-		System.out.println("   ");
+		System.out.print("   ");
 		for (char x = 'A'; x-'A' < locations.length; x++){
-			System.out.println(x);
+			System.out.print(x);
 		}
 		System.out.println();
 		for (int y = 0; y < locations[0].length; y++){

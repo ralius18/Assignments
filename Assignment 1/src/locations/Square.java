@@ -64,10 +64,10 @@ public class Square extends Location {
 	@Override
 	public void print(){
 		if (isEntrance){
-			System.out.println("E");
+			System.out.print("E");
 		}
 		else{
-			System.out.println("*");
+			System.out.print("*");
 		}
 	}
 	

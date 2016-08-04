@@ -49,7 +49,7 @@ public class Stairwell extends Location {
 
 	@Override
 	public void print() {
-		System.out.println("U");
+		System.out.print("U");
 	}
 	
 }
