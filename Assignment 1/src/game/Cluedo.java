@@ -115,9 +115,9 @@ public class Cluedo {
 	public void dealCards(){
 		ArrayList<Card> cards = new ArrayList<Card>();
 		
-		int characterIndexForSolution = new Dice(1,characters.length).roll2()-1;
-		int roomIndexForSolution = new Dice(1,rooms.length).roll2()-1;
-		int weaponIndexForSolution = new Dice(1,weapons.length).roll2()-1;
+		int characterIndexForSolution = new Dice(1,characters.length).roll()-1;
+		int roomIndexForSolution = new Dice(1,rooms.length).roll()-1;
+		int weaponIndexForSolution = new Dice(1,weapons.length).roll()-1;
 		
 		for (int i = 0; i < characters.length; i++){
 			if (i != characterIndexForSolution)

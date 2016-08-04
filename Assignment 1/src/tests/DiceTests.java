@@ -7,34 +7,32 @@ import org.junit.*;
 import control.Dice;
 
 public class DiceTests {
-
-	@Test
-	//Uses old roll method.
-	public void Test1(){
-		Dice dice = new Dice(2, 6);
-		for(int i = 1; i <= 100; i++){
-			int result = dice.roll();
-			//System.out.println("Roll: "+i+", Got: "+result);
-			if(result < 2 || result > 12)
-				fail("With 2 six sided dice, managed to roll: "+result+"\n"
-						+ "Highest should be 12 and lowest should be 2.");
-		}
-	}
 	
 	@Test
-	public void Test2(){
+	public void Test1(){
 		//Uses new dice method. roll2().
 		Dice dice = new Dice(2, 6);
 		rollDice(dice, 100, 2, 12);
 	}
 	
 	@Test
-	public void Test3(){
+	public void Test2(){
 		Dice dice = new Dice(3, 3);
 		rollDice(dice, 100, 3, 9);
 	}
 	
+	@Test
+	public void Test3(){
+		try{
+			new Dice(6, 2);
+			fail("Can not have a 2 sided dice! Must have be 3 or more.");
+		} catch(AssertionError e){
+			//Good.
+		}
+	}
+	
 	/**
+	 * Used to test the dice are working.
 	 * @param dice the dice you want to test.
 	 * @param times the amount of rolls you want to do.
 	 * @param min the smallest number that can be rolled with dice.
@@ -45,7 +43,7 @@ public class DiceTests {
 		boolean gotMin = false;
 		boolean gotMax = false;
 		for(int i = 1; i <= times; i++){
-			int result = dice.roll2();
+			int result = dice.roll();
 			//System.out.println("Roll: "+i+", Got: "+result);
 			if(result == min) gotMin = true;
 			else if(result == max) gotMax = true;
