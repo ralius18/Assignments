@@ -11,8 +11,6 @@ import game.*;
 public class Room extends Location implements Card{
 	
 	private String name;
-	private Weapon weapon;
-	private Square weaponSquare;
 	private Square squares[][];
 	public enum TYPE{
 		Kitchen,
@@ -38,6 +36,7 @@ public class Room extends Location implements Card{
 		return squares;
 	}
 	
+	@Override
 	public void addLocation(Location l){
 		if (l != null){
 			if (l instanceof Stairwell){

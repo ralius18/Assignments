@@ -1,7 +1,5 @@
 package locations;
 
-import control.Player;
-
 /**
  * Is a square that a player can start on.
  * 
@@ -22,6 +20,7 @@ public class StarterSquare extends Location {
 		super();
 	}
 	
+	@Override
 	public void addLocation(Location l){
 		if (l != null && l instanceof Square){
 			actualAddLocation(l);

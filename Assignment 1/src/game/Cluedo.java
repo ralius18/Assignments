@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * Base class for text based Cluedo game
@@ -24,7 +23,6 @@ public class Cluedo {
 	private Character characters[];
 	private Room rooms[];
 	private Weapon weapons[];
-	private Dice dice;
 	private Solution solution;
 	
 	
@@ -186,9 +184,6 @@ public class Cluedo {
 							System.out.println("\nWeapons:\n");
 							for (int j = 0; j < weapons.length; j++){
 								System.out.println("["+j+"]"+weapons[j].cardName()+" ");
-//								if (j < weapons.length - 1){
-//									System.out.println();
-//								}
 							}
 							System.out.println();
 							
@@ -208,10 +203,7 @@ public class Cluedo {
 							
 							System.out.println("\nCharacters:\n");
 							for (int j = 0; j < characters.length; j++){
-								System.out.print("["+j+"]:"+characters[j].cardName()+ " ");
-								if (j < characters.length - 1){
-									System.out.print("| ");
-								}
+								System.out.println("["+j+"]:"+characters[j].cardName()+ " ");
 							}
 							System.out.println();
 							valid = false;
