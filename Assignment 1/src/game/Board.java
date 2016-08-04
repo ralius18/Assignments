@@ -20,7 +20,6 @@ import control.*;
  */
 public class Board {
 	
-	private Character[] characters;
 	private Room[] rooms;
 	private Location locations[][]; 
 	//For storing locations of players
@@ -33,8 +32,12 @@ public class Board {
 	private Stairwell stairsToConservatory;
 	private Middle middle = new Middle();
 	
+	/**
+	 * Creates an instance of the board
+	 * @param characters
+	 * @param rooms
+	 */
 	public Board (Character[] characters, Room[] rooms){
-		this.characters = characters;
 		this.rooms = rooms;
 		this.locations = new Location[24][25];
 		this.dice = new Dice(2,6);
@@ -84,7 +87,6 @@ public class Board {
 			reader.close();
 		} catch (IOException e){
 			System.out.println("Could not read Board");
-			System.exit(1);
 		}
 		
 		//Enter starting positions
@@ -95,14 +97,26 @@ public class Board {
 		addLocations();
 	}
 	
+	/**
+	 * @param character
+	 * @return Position of character as a Point
+	 */
 	public Point getPosition(Character character){
 		return playerPositions.get(character);
 	}
 	
+	/**
+	 * @return Dice used on the board
+	 */
 	public Dice getDice(){
 		return dice;
 	}
 	
+	/**
+	 * Gives Location from given character
+	 * @param symbol
+	 * @return Location corresponding to character
+	 */
 	public Location parseLocation(char symbol) {
 		switch (symbol){
 			case 'n' : return null;
@@ -123,7 +137,7 @@ public class Board {
 			case 'L' : stairsToLounge = new Stairwell(rooms[7]);
 					   return stairsToLounge;
 			case 'K' : stairsToKitchen = new Stairwell(rooms[0]);
-			   		   return stairsToLounge;
+			   		   return stairsToKitchen;
 			case 'C' : stairsToConservatory = new Stairwell(rooms[2]);
 			   		   return stairsToConservatory;
 			case 'm' : return middle;
@@ -131,6 +145,10 @@ public class Board {
 		return null;
 	}
 	
+	/**
+	 * For every location on the board, add the locations above, below,
+	 * left and right of it if it can be moved to
+	 */
 	public void addLocations(){
 		for (int i = 0; i < locations.length; i++){
 			for (int j = 0; j < locations[i].length; j++){
@@ -151,14 +169,19 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * @param p
+	 * @return Location corresponding to coordinates of given Point
+	 */
 	public Location getSquareFromPoint(Point p){
 		return locations[p.x][p.y];
 	}
 
-	public void print(){
-		
-	}
-
+	/**
+	 * Sets position of character to given point
+	 * @param character
+	 * @param point
+	 */
 	public void setPosition(Character character, Point point) {
 		if (point.getX() >= 0 && point.getX() < locations.length 
 				&& point.getY() >= 0 && point.getY() < locations[0].length){
@@ -167,6 +190,10 @@ public class Board {
 		
 	}
 	
+	/**
+	 * @param p
+	 * @return Location at given point
+	 */
 	public Location getLocationAtPoint(Point p){
 		if (p.getX() >= 0 && p.getX() < locations.length 
 				&& p.getY() >= 0 && p.getY() < locations[0].length) {
@@ -177,14 +204,18 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Print out the board to the console
+	 */
 	public void printBoard(){
-		System.out.println("   ");
+		System.out.print("   ");
 		for (char x = 'A'; x-'A' < locations.length; x++){
-			System.out.println(x);
+			System.out.print(x);
 		}
 		System.out.println();
 		for (int y = 0; y < locations[0].length; y++){
 			System.out.print(y+" ");
+			//Extra space if single digit
 			if (y < 10){
 				System.out.print(" ");
 			}

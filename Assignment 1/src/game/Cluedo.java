@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * Base class for text based Cluedo game
@@ -24,7 +23,6 @@ public class Cluedo {
 	private Character characters[];
 	private Room rooms[];
 	private Weapon weapons[];
-	private Dice dice;
 	private Solution solution;
 	
 	
@@ -117,9 +115,9 @@ public class Cluedo {
 	public void dealCards(){
 		ArrayList<Card> cards = new ArrayList<Card>();
 		
-		int characterIndexForSolution = new Dice(1,characters.length).roll()-1;
-		int roomIndexForSolution = new Dice(1,rooms.length).roll()-1;
-		int weaponIndexForSolution = new Dice(1,weapons.length).roll()-1;
+		int characterIndexForSolution = new Dice(1,characters.length).roll2()-1;
+		int roomIndexForSolution = new Dice(1,rooms.length).roll2()-1;
+		int weaponIndexForSolution = new Dice(1,weapons.length).roll2()-1;
 		
 		for (int i = 0; i < characters.length; i++){
 			if (i != characterIndexForSolution)
@@ -151,7 +149,7 @@ public class Cluedo {
 			for (int i = 0; i < players.length; i++){
 				Player p = players[i];
 				System.out.println(p.name() + ": Your turn");
-				board.print();
+				board.printBoard();
 				
 				try{
 					BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -185,10 +183,7 @@ public class Cluedo {
 							System.out.println("Your current hand:\n"+p.handToString());
 							System.out.println("\nWeapons:\n");
 							for (int j = 0; j < weapons.length; j++){
-								System.out.print("["+j+"]"+weapons[j].cardName()+" ");
-								if (j < weapons.length - 1){
-									System.out.println("| ");
-								}
+								System.out.println("["+j+"]"+weapons[j].cardName()+" ");
 							}
 							System.out.println();
 							
@@ -208,10 +203,7 @@ public class Cluedo {
 							
 							System.out.println("\nCharacters:\n");
 							for (int j = 0; j < characters.length; j++){
-								System.out.print("["+j+"]:"+characters[j].cardName()+ " ");
-								if (j < characters.length - 1){
-									System.out.print("| ");
-								}
+								System.out.println("["+j+"]:"+characters[j].cardName()+ " ");
 							}
 							System.out.println();
 							valid = false;
@@ -260,13 +252,64 @@ public class Cluedo {
 							}
 							
 							if (currentLocation instanceof Middle){
-								//TODO: Process choices
+								if (solution.checkGuess(chosenCharacter, chosenWeapon, chosenRoom)){
+									System.out.println(p.getCharacter().cardName()+" has solved it!\n"
+											+ "The solution was: ");
+									solution.print();
+									running = false;
+									return;
+								}
+								else {
+									ArrayList<Card> cardsLeftOver = p.getHand();
+									players[i] = null;
+									while (! cardsLeftOver.isEmpty()){
+										for (int j = 0; j < players.length && !cardsLeftOver.isEmpty(); j++){
+											if (players[j] != null){
+												players[j].giveCard(cardsLeftOver.remove(0));
+											}
+										}
+									}
+									System.out.println(p.getCharacter().cardName()
+											+" made an incorrect guess. They are out of the game");
+								}
+							}
+							else{
+								Player[] otherPlayers = new Player[players.length-1];
+								int index = 0;
+								for (int j = 0; j < i; j++){
+									otherPlayers[index++] = players[j];
+								}
+								for (int j = i+1; j < players.length; j++){
+									otherPlayers[index++] = players[j];
+								}
+								for (Player otherPlayer : otherPlayers){
+									Card card = otherPlayer.getCard(chosenCharacter, chosenWeapon, chosenRoom);
+									if (card != null){
+										System.out.println(otherPlayer.getCharacter().cardName()
+												+" has shown you their card: ["+card.cardName()+"]");
+										break;
+									}
+									else {
+										System.out.println(otherPlayer.getCharacter().cardName()
+												+" does not have any of the cards that you guessed");
+									}
+								}
 							}
 						}
 					} //End of player turn
 				} catch (Exception e){
 					e.printStackTrace();
 				}
+			}
+			ArrayList<Player> newPlayers = new ArrayList<Player>();
+			for (int i = 0; i < players.length; i++){
+				if (players[i] != null){
+					newPlayers.add(players[i]);
+				}
+			}
+			players = new Player[newPlayers.size()];
+			for (int i = 0; i < players.length; i++){
+				players[i] = newPlayers.get(i);
 			}
 		}
 	}

@@ -1,9 +1,6 @@
 package locations;
 
-import java.util.ArrayList;
-
 import control.*;
-import game.*;
 
 /**
  * Is a square on the board. A square that players move around on, in between rooms.
@@ -15,20 +12,12 @@ import game.*;
  */
 public class Square extends Location {
 	
-	//There will be different players on squares.
 	private Player player;
-	
 	private boolean isEntrance;
 	
-	//What if we have 2 people on the same square?? TODO
-	//private Set<Player> multiplePlayers = new HashSet<>();
-	
 	/**
-	 * Create a Square
-	 * @param x position on board.
-	 * @param y position on board.
-	 * @param player on this square (null if no player on square).
-	 * @param room that this square is in.
+	 * Creates square, which could be an entrance to a room
+	 * @param isEntrance
 	 */
 	public Square(boolean isEntrance){
 		super();
@@ -42,14 +31,22 @@ public class Square extends Location {
 		return player;
 	}
 	
+	/**
+	 * Sets player on the square
+	 * @param player
+	 */
 	public void setPlayer(Player player){
 		this.player = player;
 	}
 	
+	/**
+	 * @return Whether the Square is an entrance
+	 */
 	public boolean isEntrance(){
 		return isEntrance;
 	}
 	
+	@Override
 	public void addLocation(Location l){
 		if (l != null){
 			if (l instanceof Room && isEntrance){
@@ -64,10 +61,10 @@ public class Square extends Location {
 	@Override
 	public void print(){
 		if (isEntrance){
-			System.out.println("E");
+			System.out.print("E");
 		}
 		else{
-			System.out.println("*");
+			System.out.print("*");
 		}
 	}
 	
