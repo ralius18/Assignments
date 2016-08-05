@@ -25,7 +25,10 @@ public class Cluedo {
 	private Weapon weapons[];
 	private Solution solution;
 	
-	
+	/**
+	 * Creates a Cluedo object with the number of players provided
+	 * @param numPlayers
+	 */
 	public Cluedo(int numPlayers){
 		//Initialising characters
 		characters = new Character[6];
@@ -69,6 +72,10 @@ public class Cluedo {
 		loop();
 	}
 	
+	/**
+	 * Creates players by prompting for selection
+	 * @return Array of players of the game
+	 */
 	public Player[] initialisePlayers(){
 		for (int i = 0; i < players.length; i++){
 			System.out.println("Player "+(i+1)+
@@ -112,6 +119,10 @@ public class Cluedo {
 		return players;
 	}
 	
+	/**
+	 * Chooses cards for the solution, and deals the remaining
+	 * cards to all players
+	 */
 	public void dealCards(){
 		ArrayList<Card> cards = new ArrayList<Card>();
 		
@@ -143,6 +154,10 @@ public class Cluedo {
 		}
 	}
 	
+	/**
+	 * Main loop for game of Cluedo, loops over players turns
+	 * until solution is solved
+	 */
 	public void loop(){
 		boolean running = true;
 		while(running){
@@ -154,33 +169,44 @@ public class Cluedo {
 				try{
 					BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 					//Begin processing a single player
-					p.move(board);
+					p.move(board); //attempt to move the player
 					Location currentLocation = board.getLocationAtPoint(board.getPosition(p.getCharacter()));
+					
 					if (currentLocation instanceof Room || currentLocation instanceof Middle){
+						//If player is in the Middle, ask to solve the murder
 						if (currentLocation instanceof Middle){
 							System.out.println("Would you like to attempt to solve the murder? If you are wrong, you cannot continure (y/n)");
 						}
+						//If player is in a Room, ask to make a guess
 						else {
 							System.out.println("Would you like to make a guess in the "+((Room)currentLocation).cardName()+"? (y/n)");
 						}
-						boolean valid = false;
-						boolean makingGuess = false;
+						boolean valid = false; //used for checking if input is valid
+						boolean makingGuess = false; //used for checking if player is making a guess
+						
+						//loop until the input is valid
 						while (!valid){
 							String input = reader.readLine();
+							//yes
 							if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
 								valid = true;
 								makingGuess = true;
 							}
+							//no
 							else if (input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")){
 								valid = true;
 								makingGuess = false;
 							}
 							else {
+								//not valid
 								System.out.println("Enter either 'y' or 'n'");
 							}
 						}
 						if (makingGuess){
+							//prints current hand
 							System.out.println("Your current hand:\n"+p.handToString());
+							
+							//prints list of weapons to choose from
 							System.out.println("\nWeapons:\n");
 							for (int j = 0; j < weapons.length; j++){
 								System.out.println("["+j+"]"+weapons[j].cardName()+" ");
@@ -189,7 +215,10 @@ public class Cluedo {
 							
 							valid = false;
 							Weapon chosenWeapon = null;
+							
+							//loop until input is valid
 							while (!valid){
+								//ask to choose weapon
 								System.out.println("Choose weapon: (Enter number)");
 								valid = true;
 								try{
@@ -201,14 +230,18 @@ public class Cluedo {
 								}
 							}
 							
+							//prints list of characters to choose from
 							System.out.println("\nCharacters:\n");
 							for (int j = 0; j < characters.length; j++){
 								System.out.println("["+j+"]:"+characters[j].cardName()+ " ");
 							}
 							System.out.println();
+							
 							valid = false;
 							Character chosenCharacter = null;
+							//loop until input is valid
 							while (!valid){
+								//ask to choose character
 								System.out.println("Choose character: (Enter number)");
 								valid = true;
 								try{
@@ -220,24 +253,26 @@ public class Cluedo {
 								}
 							}
 							
+							//put the character in the room
 							if (currentLocation instanceof Room){
 								board.setPosition(chosenCharacter, board.getPosition(p.getCharacter()));
 							}
 							
+							//set chosen room to current location if guessing
 							Room chosenRoom = null;
 							if (currentLocation instanceof Room){
 								chosenRoom = (Room) currentLocation;
 							}
+							//ask for chosen room if attempting to solve
 							else if (currentLocation instanceof Middle){
+								//prints list of rooms
 								System.out.println("Rooms:\n");
 								for (int j = 0; j < rooms.length; j++){
-									System.out.print("["+j+"]:"+rooms[j].cardName()+ " ");
-									if (j < rooms.length-1){
-										System.out.print("| ");
-									}
+									System.out.println("["+j+"]:"+rooms[j].cardName()+ " ");
 								}
 								System.out.println();
 								valid = false;
+								//loop until input is valid
 								while (!valid){
 									System.out.println("Choose room: (Enter number)");
 									valid = true;
@@ -251,7 +286,9 @@ public class Cluedo {
 								}
 							}
 							
+							//if player is attempting to solve
 							if (currentLocation instanceof Middle){
+								//if guess is correct
 								if (solution.checkGuess(chosenCharacter, chosenWeapon, chosenRoom)){
 									System.out.println(p.getCharacter().cardName()+" has solved it!\n"
 											+ "The solution was: ");
@@ -260,6 +297,8 @@ public class Cluedo {
 									return;
 								}
 								else {
+									//guess was incorrect, player out of game
+									//deal player's cards to other players
 									ArrayList<Card> cardsLeftOver = p.getHand();
 									players[i] = null;
 									while (! cardsLeftOver.isEmpty()){
@@ -273,7 +312,7 @@ public class Cluedo {
 											+" made an incorrect guess. They are out of the game");
 								}
 							}
-							else{
+							else{ //other players attempt to prove guess (in room) wrong
 								Player[] otherPlayers = new Player[players.length-1];
 								int index = 0;
 								for (int j = 0; j < i; j++){
@@ -283,13 +322,14 @@ public class Cluedo {
 									otherPlayers[index++] = players[j];
 								}
 								for (Player otherPlayer : otherPlayers){
+									//find one of the chosen cards in other player's hands
 									Card card = otherPlayer.getCard(chosenCharacter, chosenWeapon, chosenRoom);
-									if (card != null){
+									if (card != null){//a player has one of the cards, so guess is wrong
 										System.out.println(otherPlayer.getCharacter().cardName()
 												+" has shown you their card: ["+card.cardName()+"]");
 										break;
 									}
-									else {
+									else { //player does not have any of the cards, so guess could be correct
 										System.out.println(otherPlayer.getCharacter().cardName()
 												+" does not have any of the cards that you guessed");
 									}
@@ -298,9 +338,11 @@ public class Cluedo {
 						}
 					} //End of player turn
 				} catch (Exception e){
-					e.printStackTrace();
+					e.printStackTrace(); //should not happen
 				}
 			}
+			
+			//taking players out of game (incorrect attempt to solve
 			ArrayList<Player> newPlayers = new ArrayList<Player>();
 			for (int i = 0; i < players.length; i++){
 				if (players[i] != null){
@@ -314,6 +356,10 @@ public class Cluedo {
 		}
 	}
 
+	/**
+	 * Entry point for game of Cluedo, prompts number of players
+	 * @param args
+	 */
 	public static void main(String[] args){
 		System.out.println("*** CLUEDO V1.0 ***");
 		System.out.println("By Brad Stone & Jarvis Dunn, 2016");
