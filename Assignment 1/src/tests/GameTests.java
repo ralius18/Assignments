@@ -59,7 +59,7 @@ public class GameTests {
 		characters[3] = new Character("Green");
 		characters[4] = new Character("Peacock");
 		characters[5] = new Character("Plum");
-
+		
 		//Initialising rooms
 		Room[] rooms = new Room[9];
 		rooms[0] = new Room("Kitchen");

@@ -1,6 +1,7 @@
-package game;
+package control;
 
-import control.*;
+import game.*;
+import game.Character;
 import locations.*;
 
 import java.io.BufferedReader;
