@@ -14,32 +14,20 @@ public class Dice {
 	public Dice(int number, int sides){
 		this.number = number;
 		this.sides = sides;
-		assert sides >= 3 : "Mu8st have more than 3 sides for dice!";
+		assert sides >= 3 : "Must have more than 3 sides for dice!";
 	}
 
 	/**
 	 * Gives a random integer based on number (of dice) and sides.
 	 * @return an integer from (1 * number) to (sides * number)
-	 */
+	 */	
 	public int roll(){
-		int result = 0;
-		if (sides >= 3){
-			for (int i = 0; i < number; i++){
-				Random random = new Random();
-				int roll = random.nextInt();
-				result += (roll % sides)+1;
-			}
-		}
-		else {
-			System.out.println("Number of sides must be at least 3");
-		}
-		return result;
-	}
-	
-	public int roll2(){
 		int min = 1 * number;
 		int max = sides * number;
 		assert min < max;
-		return (int) (min + Math.random()*(max - min + 1));
+		int result =  (int) (min + Math.random()*(max - min + 1));
+		//for the one small chance that math.random gives a perfect 1.0.
+		if(result == 13) return 12;
+		return result;
 	}
 }

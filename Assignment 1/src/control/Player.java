@@ -36,7 +36,7 @@ public class Player {
 	 */
 	public void move(Board board){
 		Point currentPos = board.getPosition(this.character);
-		int roll = board.getDice().roll2();
+		int roll = board.getDice().roll();
 		System.out.println("You rolled " + roll);
 		Point move = attemptMove(roll, currentPos, board);
 		board.setPosition(this.character, move);

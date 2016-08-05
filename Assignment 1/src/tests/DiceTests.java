@@ -13,7 +13,7 @@ public class DiceTests {
 	public void Test1(){
 		Dice dice = new Dice(2, 6);
 		for(int i = 1; i <= 100; i++){
-			int result = dice.roll2();
+			int result = dice.roll();
 			//System.out.println("Roll: "+i+", Got: "+result);
 			if(result < 2 || result > 12)
 				fail("With 2 six sided dice, managed to roll: "+result+"\n"
@@ -45,7 +45,7 @@ public class DiceTests {
 		boolean gotMin = false;
 		boolean gotMax = false;
 		for(int i = 1; i <= times; i++){
-			int result = dice.roll2();
+			int result = dice.roll();
 			//System.out.println("Roll: "+i+", Got: "+result);
 			if(result == min) gotMin = true;
 			else if(result == max) gotMax = true;

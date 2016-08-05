@@ -20,6 +20,7 @@ import control.*;
  */
 public class Board {
 	
+	private Character[] characters;
 	private Room[] rooms;
 	private Location locations[][]; 
 	//For storing locations of players
@@ -38,6 +39,7 @@ public class Board {
 	 * @param rooms
 	 */
 	public Board (Character[] characters, Room[] rooms){
+		this.characters = characters;
 		this.rooms = rooms;
 		this.locations = new Location[24][25];
 		this.dice = new Dice(2,6);
@@ -86,7 +88,7 @@ public class Board {
 			}
 			reader.close();
 		} catch (IOException e){
-			System.out.println("Could not read Board");
+			System.out.println("Could not read Board"); //should never get here
 		}
 		
 		//Enter starting positions
@@ -142,7 +144,7 @@ public class Board {
 			   		   return stairsToConservatory;
 			case 'm' : return middle;
 		}
-		return null;
+		return null; //should never get here
 	}
 	
 	/**
@@ -202,6 +204,10 @@ public class Board {
 		else {
 			return null;
 		}
+	}
+	
+	public Character[] getCharacters(){
+		return this.characters;
 	}
 	
 	/**
